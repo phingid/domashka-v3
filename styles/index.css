@@ -1,0 +1,6 @@
+@import url('reset.css');
+@import url('variables.css');
+@import url('global.css');
+@import url('../fonts/index.css');
+@import url('ui/index.css');
+@import url('/styles/components/characters.css');

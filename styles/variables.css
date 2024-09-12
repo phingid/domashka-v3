@@ -1,0 +1,9 @@
+:root {
+    /* Font */
+    --font-family: 'SUSE', sans-serif;
+
+    /* Colors */
+    --color-primary: #069460;
+    --color-white: #ffffff;
+    --color-black: #000000;
+}
