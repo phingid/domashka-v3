@@ -1,3 +1,5 @@
+import PageButton from "./classes/PageButton.js";
+
 const API = 'https://rickandmortyapi.com/api';
 const wrapper = document.getElementById('wrapper');
 const charactersActions = document.getElementById('charactersActions');
@@ -24,16 +26,6 @@ class Character {
                 <div>
             </div>
         `;
-    }
-}
-
-class PageButton {
-    constructor(data) {
-        this.pageNumber = data; 
-    }
-
-    getHTML() {
-        return `<button class="button">${this.pageNumber}</button>`;
     }
 }
 
