@@ -2,18 +2,20 @@ const API = 'https://rickandmortyapi.com/api';
 const wrapper = document.getElementById('wrapper');
 const charactersActions = document.getElementById('charactersActions');
 
-function Characters(data) {
-    this.id = data.id;
-    this.name = data.name;
-    this.status = data.status;
-    this.gender = data.gender;
-    this.image = data.image;
 
+class Character {
+    constructor(data) {
+        this.id = data.id;
+        this.name = data.name;
+        this.status = data.status;
+        this.gender = data.gender;
+        this.imageURL = data.image;
+    }
 
-    this.getHTML = function () {
+    getHTML() {
         return `
             <div class="characters__card">
-                <img src="${this.image}"/>
+                <img src="${this.imageURL}"/>
                 <div class="characters__info">
                     <p class="characters__id">ID: ${this.id}</p>
                     <h2 class="characters__name">${this.name}</h2>
@@ -25,10 +27,13 @@ function Characters(data) {
     }
 }
 
-function PageButtons (data) {
-    this.pageNumber = data;
-    this.getHTML = function () {
-        return `<button class="button">${data}</button>`;
+class PageButton {
+    constructor(data) {
+        this.pageNumber = data; 
+    }
+
+    getHTML() {
+        return `<button class="button">${this.pageNumber}</button>`;
     }
 }
 
@@ -36,26 +41,23 @@ function PageButtons (data) {
     const characters = `${API}/character`;
     const response = await fetch(`${characters}`).then(responce => responce.json());
     const pages = response.info.pages;
-    // https://rickandmortyapi.com/api/character/?page=2
 
-    const addContent = (() => {
-        for (let i = 1; i <= pages; i++) {
-            const button = new PageButtons(i);
-            charactersActions.innerHTML += button.getHTML();
-        }
+    for (let i = 1; i <= pages; i++) {
+        const button = new PageButton(i);
+        charactersActions.innerHTML += button.getHTML();
+    }
 
-        let buttons = document.querySelectorAll('button');
-        buttons.forEach(button => {
-            button.addEventListener('click', async () => {
-                wrapper.innerHTML = '';
-                let responseCorrected = await fetch(`${characters}/?page=${button.innerHTML}`).then(responseCorrected => responseCorrected.json());
-                responseCorrected.results.forEach(character => {
-                    const characterFormatted = new Characters(character);
-                    wrapper.innerHTML += characterFormatted.getHTML();                                                                                                                                                                                                                                                                                                                                         
-                })
+    let buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('click', async () => {
+            wrapper.innerHTML = '';
+            let responseCorrected = await fetch(`${characters}/?page=${button.innerHTML}`).then(responseCorrected => responseCorrected.json());
+            responseCorrected.results.forEach(character => {
+                const characterFormatted = new Character(character);
+                wrapper.innerHTML += characterFormatted.getHTML();                                                                                                                                                                                                                                                                                                                                         
             })
         });
-    })();
+    });
 })()
 
 
